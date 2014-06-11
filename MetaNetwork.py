@@ -33,6 +33,7 @@ class MetaNetwork:
         self.propertyIdentities = {}
         self.__node_tree = defaultdict(dmlpu.nodeclass_dict)
         self.networks = {}
+        self.sources = {}
 
     def __validate_tree_branch(self, nodeclass_name, nodeset_name=None, node_name=None):
         """
@@ -120,8 +121,12 @@ class MetaNetwork:
         for attrib_key in mn_tag.attrib:
             self.attributes[attrib_key] = dmlpu.format_prop(mn_tag.attrib[attrib_key])
 
-        for prop in mn_tag.find('properties').iterfind('property'):
-            self.properties[prop.attrib['id']] = dmlpu.format_prop(prop.attrib['value'])
+        properties_tag = mn_tag.find('properties')
+        if properties_tag is not None:
+            for prop in properties_tag.iterfind('property'):
+                self.properties[prop.attrib['id']] = dmlpu.format_prop(prop.attrib['value'])
+
+        ##TODO: deal with sources tag in Automap output
 
         self.propertyIdentities = \
             dmlpu.get_property_identities_dict(mn_tag.find('propertyIdentities'), prop_inclusion_test)

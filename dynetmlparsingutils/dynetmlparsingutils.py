@@ -90,7 +90,7 @@ def validate_and_get_inclusion_test(include_tuple, ignore_tuple):
 
     for pair, name in (include_tuple, 'include_tuple'), (ignore_tuple, 'ignore_tuple'):
         check_contained_types(pair[0], name, (str, unicode))
-        check_contained_types(pair[1], name, (str, unicode))
+        #check_contained_types(pair[1], name, (str, unicode))
 
     if len(include_tuple[0]) > 0 and len(ignore_tuple[0]) > 0:
             raise ValueError('{0} and {1} cannot both contain values'.format(include_tuple[1], ignore_tuple[1]))
@@ -98,7 +98,7 @@ def validate_and_get_inclusion_test(include_tuple, ignore_tuple):
     if len(include_tuple[0]) > 0:
         good_set = set(include_tuple[0])
         return lambda x: x in good_set
-    elif len(ignore_tuple) > 0:
+    elif len(ignore_tuple[0]) > 0:
         bad_set = set(ignore_tuple[0])
         return lambda x: x not in bad_set
 
